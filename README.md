@@ -9,6 +9,7 @@ GitOps is the practice of using Git and code as the source of all configuration.
 - [OpenTofu](https://opentofu.org/): Alternative open source variant of Terraform, currently they are largely identical
 - [SOPS](https://github.com/getsops/sops): Tool for managing secrets as part of a version controlled repository
 - [Age](https://github.com/FiloSottile/age): Modern tool for creating cryptographic keys, encrypting and decrypting encoded material
+- [OpenSSH](https://www.openssh.com/): Tool for managing machines through remmote shell
 
 ## External Services
 
