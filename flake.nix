@@ -33,9 +33,16 @@
       devShells = withPkgs (pkgs: {
         default = pkgs.mkShell {
           buildInputs = with pkgs; [
+            # The tools available in this project
+            # See the Nix package registry for what's available
+            # https://search.nixos.org/packages
+
             # Infrastructure tools
-            terraform # Commonly used
-            opentofu # Open source alternative to terraform
+            # !TODO: Figure out if initial setup time can be reduced, and that the devcontainer caches these across projects
+            # Currently both IaC takes minutes to compile on clean setups
+            # It should be a one time cost across the machine's lifetime
+            # terraform # Commonly used
+            # opentofu # Open source alternative to terraform
 
             # Development Tools
             openssh # SSH client
