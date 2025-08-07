@@ -17,12 +17,14 @@ GitOps is the practice of using Git and code as the source of all configuration.
 
 ## Workbench Overview
 
-- [Nix](https://nixos.org/): Declares which CLI tools and versions that are used in this project
-- [Terraform](https://developer.hashicorp.com/terraform): A commonly used tooling for provisioning and configuring external services
-- [OpenTofu](https://opentofu.org/): Alternative open source variant of Terraform, currently they are largely identical
-- [SOPS](https://github.com/getsops/sops): Tool for managing secrets as part of a version controlled repository
-- [Age](https://github.com/FiloSottile/age): Modern tool for creating cryptographic keys, encrypting and decrypting encoded material
-- [OpenSSH](https://www.openssh.com/): Tool for managing machines through remmote shell
+A short descript about each tool is inside [./docs/cheat-sheet/](/docs/cheat-sheet/). I advise using each tools inbuilt helper as well for quick reference `tofu --help`. For more details refer to each tools documentation site.
+
+- [`nix`](https://nixos.org/): Declares which CLI tools and versions that are used in this project
+- [`terraform`](https://developer.hashicorp.com/terraform): A commonly used tooling for provisioning and configuring external services
+- [`tofu`](https://opentofu.org/): Alternative open source variant of Terraform, currently they are largely identical
+- [`sops`](https://github.com/getsops/sops): Tool for managing secrets as part of a version controlled repository
+- [`age-keygen`](https://github.com/FiloSottile/age): Modern tool for creating cryptographic keys, encrypting and decrypting encoded material
+- [`ssh`](https://www.openssh.com/): Tool for managing machines through remmote shell
 
 ## External Services
 
