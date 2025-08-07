@@ -8,7 +8,7 @@
     let
       # Supported systems
       systems = [
-        "x86_64-linux" # !TODO: Verify
+        "x86_64-linux" # Verified
         "aarch64-linux" # !TODO: Verify
         "x86_64-darwin" # !TODO: Verify
         "aarch64-darwin" # Verified
