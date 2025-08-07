@@ -2,7 +2,20 @@
 
 GitOps is the practice of using Git and code as the source of all configuration.
 
-## Tooling Overview
+## Setup
+
+> [!NOTE]
+> Is based on the Dev Container extension and it's dependencies being present and running.
+> Some platform recommandation:
+> - Windows: [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+> - MacOS: [OrbStack](https://orbstack.dev/)
+> - Linux: [Docker Engine](https://docs.docker.com/engine/install/)
+
+1. Clone the repo
+2. Open using the devcontainer `View -> Command Palette` + `Dev Containers: Reopen in Container``
+3. Boot into the development shell: `nix develop`
+
+## Workbench Overview
 
 - [Nix](https://nixos.org/): Declares which CLI tools and versions that are used in this project
 - [Terraform](https://developer.hashicorp.com/terraform): A commonly used tooling for provisioning and configuring external services
