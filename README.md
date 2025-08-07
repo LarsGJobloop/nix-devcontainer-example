@@ -39,13 +39,21 @@ GitOps is the practice of using Git and code as the source of all configuration.
 2. Update the [./infrastructure/ssh-key.tf](/infrastructure/ssh-key.tf) with the public key [./ssh-identity.pub](/ssh-identity.pub)
 
 **Setup playground**:
+
+> [!NOTE]
+> We are working with minimally exposed secrets here (your Hetzner access token). Which requires us to wrap the Terraform commands in a SOPS invocation,
+> ensuring the secrets are only available to the process. The generic form is:
+> `sops exec-env secrets.yaml "some command"`
+> You could decrypt the secrets and just not commit those files. But that tend to lead to accidents. Still there are options, you will have to decide what
+> works best for any particular project.
+
 1. Instantiate infrastructure
 
     ```sh
-    terraform -chdir=inrfastructure apply
+    sops exec-env secrets.yaml "terraform -chdir=inrfastructure apply"
     ````
 
-2. SSH into the server (read ip-address from previous step)
+2. SSH into the server (read ip-address from previous step, you can read it using `terraform output`)
 
     ```sh
     ssh -i ssh-identity root@<ip-address>
@@ -53,9 +61,8 @@ GitOps is the practice of using Git and code as the source of all configuration.
 3. Fool around, spin it down, then up.
 
 **Cleanup**:
-Destroy all resources using:
 ```sh
-terraform -chdir=infrastructure destroy
+sops exec-env secrets.yaml "terraform -chdir=infrastructure destroy"
 ```
 
 ## Workbench Overview
