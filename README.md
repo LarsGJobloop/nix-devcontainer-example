@@ -30,3 +30,12 @@ A short descript about each tool is inside [./docs/cheat-sheet/](/docs/cheat-she
 
 - [GitHub](https://github.com/): A cloud provider delivering Version Control Systems, Collaboration platform, Identities, automated workers and binary storage repositories
 - [Hetzner](https://www.hetzner.com/): A cheap, European, cloud provider delivering generic Compute, Network, and Storage Solutions
+
+## Rational behind the tooling choice
+
+<p float="left" align="middle">
+  <img width="300" src="./docs/assets/workbench-organized.webp" alt="An organized workbench" />
+  <img width="300" src="./docs/assets/workbench-disorganized.webp" alt="A messy garage" />
+<p>
+
+The bar aim to reach is the organized toolbench where all the tools we need for a specific project are laid out and outlined.
