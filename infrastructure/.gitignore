@@ -1,0 +1,8 @@
+# Ignore intermediate files
+.terraform
+
+# Ignore local state files
+*.tfstate*
+
+# Ignore potential variables
+*.tfvars

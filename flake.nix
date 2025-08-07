@@ -41,8 +41,8 @@
             # !TODO: Figure out if initial setup time can be reduced, and that the devcontainer caches these across projects
             # Currently both IaC takes minutes to compile on clean setups
             # It should be a one time cost across the machine's lifetime
-            # terraform # Commonly used
-            # opentofu # Open source alternative to terraform
+            terraform # Commonly used
+            opentofu # Open source alternative to terraform
 
             # Development Tools
             openssh # SSH client

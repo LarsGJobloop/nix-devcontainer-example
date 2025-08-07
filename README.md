@@ -15,6 +15,49 @@ GitOps is the practice of using Git and code as the source of all configuration.
 2. Open using the devcontainer `View -> Command Palette` + `Dev Containers: Reopen in Container``
 3. Boot into the development shell: `nix develop`
 
+## Usage
+
+**Get vendor credentials**:
+1. Fetch an API key for Hetzner from the cloud console for a specific project
+2. Update the secrets file with the key
+
+    ```sh
+    sops edit secrets.yaml
+    ```
+
+**Setup cryptographic identities**:
+
+> [!NOTE]
+> We are treating the generated identities very carfree here. Think of these here more as home printed passports than stable identities.
+> Those requires quite a bit more backing authority as well as infrastructure to prop up.
+
+1. Create a SSH key (or use a pre-existing one)
+
+    ```sh
+    ssh-keygen -t ed25519 -b 4096 -C "" -P "" -f ssh-identity
+    ```
+2. Update the [./infrastructure/ssh-key.tf](/infrastructure/ssh-key.tf) with the public key [./ssh-identity.pub](/ssh-identity.pub)
+
+**Setup playground**:
+1. Instantiate infrastructure
+
+    ```sh
+    terraform -chdir=inrfastructure apply
+    ````
+
+2. SSH into the server (read ip-address from previous step)
+
+    ```sh
+    ssh -i ssh-identity root@<ip-address>
+    ```
+3. Fool around, spin it down, then up.
+
+**Cleanup**:
+Destroy all resources using:
+```sh
+terraform -chdir=infrastructure destroy
+```
+
 ## Workbench Overview
 
 A short descript about each tool is inside [./docs/cheat-sheet/](/docs/cheat-sheet/). I advise using each tools inbuilt helper as well for quick reference `tofu --help`. For more details refer to each tools documentation site.
