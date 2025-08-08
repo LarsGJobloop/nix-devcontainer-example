@@ -7,7 +7,7 @@ module "compose_app" {
 
   # Compose app configuration
   compose_app_repo   = "https://github.com/LarsGJobloop/nix-devcontainer-example.git"
-  compose_app_branch = "gitops-introduction"
+  compose_app_branch = "compose-app"
   compose_app_path   = "compose.yaml"
 
   # Reconciliation configuration
