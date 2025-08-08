@@ -6,17 +6,16 @@ services:
     ports:
       - 80:80
       # - 443:443 TLS requires more setup than this intro allows
-      - 8080:8080
+      # - 8080:8080 # Uncomment this and the command below to enable Traefik's dashboard
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     command:
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
+      # "--api.insecure=true" # Uncomment this and the port above to enable Traefik's dashboard
   
   example-service:
     image: stefanprodan/podinfo
-    ports:
-      - 9898:9898
     environment:
       - PODINFO_UI_COLOR=111827
       - PODINFO_UI_MESSAGE=Hello from GitOps!
