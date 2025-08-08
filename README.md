@@ -53,12 +53,52 @@ GitOps is the practice of using Git and code as the source of all configuration.
     sops exec-env secrets.yaml "terraform -chdir=inrfastructure apply"
     ````
 
-2. SSH into the server (read ip-address from previous step, you can read it using `terraform output`)
+2. Give it some time to boot up and (<5minutes)
+
+3. Visit the application defined in [./compose.yaml](/compose.yaml) at the returned server url:
 
     ```sh
-    ssh -i ssh-identity root@<ip-address>
+    terraform -chdir=infrastructure output compose_app
     ```
-3. Fool around, spin it down, then up.
+
+## Experience the reconciliation:
+
+1. Replace the [manifest](/compose.yaml)
+    <details>
+        <summary>Example update, review in the change log before commiting</summary>
+    
+        ```yaml
+        name: gitops-introduction
+
+        services:
+        server:
+            image: traefik:v3.5
+            ports:
+            - 80:80
+            # - 443:443 TLS requires more setup than this intro allows
+            # - 8080:8080 # Uncomment this and the command below to enable Traefik's dashboard
+            volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            command:
+            - "--providers.docker=true"
+            - "--providers.docker.exposedbydefault=false"
+            # "--api.insecure=true" # Uncomment this and the port above to enable Traefik's dashboard
+        
+        example-service:
+            image: stefanprodan/podinfo
+            environment:
+            - PODINFO_UI_COLOR=111827
+            - PODINFO_UI_MESSAGE=Welcome to the brand new app!
+            labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.example-service.rule=PathPrefix(`/`)"
+            - "traefik.http.services.example-service.loadbalancer.server.port=9898"
+        ```
+    </details>
+
+2. Commit and push the change (the server observers the online repository, not your local copy)
+
+3. Go to the IP address and refresh until the app is updates. Can take up to the reconciliation interval defined in [./infrastructure/app.tf](/infrastructure/app.tf) pluss the restart time.
 
 **Cleanup**:
 ```sh
@@ -73,7 +113,7 @@ A short descript about each tool is inside [./docs/cheat-sheet/](/docs/cheat-she
 - [`terraform`](https://developer.hashicorp.com/terraform): A commonly used tooling for provisioning and configuring external services
 - [`tofu`](https://opentofu.org/): Alternative open source variant of Terraform, currently they are largely identical
 - [`sops`](https://github.com/getsops/sops): Tool for managing secrets as part of a version controlled repository
-- [`age-keygen`](https://github.com/FiloSottile/age): Modern tool for creating cryptographic keys, encrypting and decrypting encoded material
+- [`age-keygen`](https://github.com/FiloSottile/age): Modern tool for creatingclear cryptographic keys, encrypting and decrypting encoded material
 - [`ssh`](https://www.openssh.com/): Tool for managing machines through remmote shell
 
 ## External Services

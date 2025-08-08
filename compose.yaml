@@ -18,7 +18,7 @@ services:
     image: stefanprodan/podinfo
     environment:
       - PODINFO_UI_COLOR=111827
-      - PODINFO_UI_MESSAGE=Hello from GitOps!
+      - PODINFO_UI_MESSAGE=Welcome to the brand new app!
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.example-service.rule=PathPrefix(`/`)"
