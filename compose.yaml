@@ -1,0 +1,26 @@
+name: gitops-introduction
+
+services:
+  server:
+    image: traefik:v3.5
+    ports:
+      - 80:80
+      # - 443:443 TLS requires more setup than this intro allows
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command:
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+  
+  example-service:
+    image: stefanprodan/podinfo
+    ports:
+      - 9898:9898
+    environment:
+      - PODINFO_UI_COLOR=111827
+      - PODINFO_UI_MESSAGE=Hello from GitOps!
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.example-service.rule=PathPrefix(`/`)"
+      - "traefik.http.services.example-service.loadbalancer.server.port=9898"
