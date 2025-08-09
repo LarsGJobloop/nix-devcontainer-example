@@ -27,7 +27,8 @@ output "compose_app" {
 }
 
 # Outputed for aiding with debugging
-output "cloud_config" {
-  description = "The rendered cloud-config for the server"
-  value       = module.compose_app.cloud_config
-}
+# Uncomment to see the rendered cloud-config for the server
+# output "cloud_config" {
+#   description = "The rendered cloud-config for the server"
+#   value       = module.compose_app.cloud_config
+# }
