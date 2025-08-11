@@ -14,12 +14,11 @@ services:
       - "--providers.docker.exposedbydefault=false"
       # "--api.insecure=true" # Uncomment this and the port above to enable Traefik's dashboard
   
-  example-service:
-    image: stefanprodan/podinfo
+  todo-service:
+    image: ghcr.io/larsgjobloop/nix-devcontainer-example/todo-service:latest
     environment:
-      - PODINFO_UI_COLOR=111827
-      - PODINFO_UI_MESSAGE=Welcome to the brand new app!
+      - ASPNETCORE_ENVIRONMENT=Production
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.example-service.rule=PathPrefix(`/`)"
-      - "traefik.http.services.example-service.loadbalancer.server.port=9898"
+      - "traefik.http.routers.todo-service.rule=PathPrefix(`/`)"
+      - "traefik.http.services.todo-service.loadbalancer.server.port=8080"
