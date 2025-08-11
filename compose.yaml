@@ -16,7 +16,7 @@ services:
   
   todo-service:
     build:
-      context: ./src
+      context: ./src/todo-service
       dockerfile: Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development

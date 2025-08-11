@@ -40,7 +40,7 @@ jobs:
       with:
         # See docs for how to add more services. Needs folder refactoring.
         filters: |
-          todo-service: src/**
+          todo-service: src/todo-service/**
 
   # This job is used to build and push the changes detected in the changes job.
   # The output from the changes job is used to create a matrix of services to build and push.
