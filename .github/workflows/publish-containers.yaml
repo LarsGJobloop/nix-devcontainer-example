@@ -8,6 +8,7 @@ on:
     ]
     paths:
       - 'src/**'
+      - '.github/workflows/publish-containers.yaml'
 
 env:
   # GitHub is case-insensitive, and have inconsistent casing in their API.
