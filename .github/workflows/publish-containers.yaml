@@ -48,6 +48,9 @@ jobs:
   build-and-push:
     needs: changes
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+      packages: write
     strategy:
       matrix:
         service: ${{ fromJSON(needs.changes.outputs.services) }}
