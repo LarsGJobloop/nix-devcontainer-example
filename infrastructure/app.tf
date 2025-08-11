@@ -7,8 +7,8 @@ module "compose_app" {
 
   # Compose app configuration
   compose_app_repo   = "https://github.com/LarsGJobloop/nix-devcontainer-example.git"
-  compose_app_branch = "compose-app"
-  compose_app_path   = "compose.yaml"
+  compose_app_branch = "mono-repo"
+  compose_app_path   = "compose.production.yaml"
 
   # Reconciliation configuration
   reconciliation_intervall = "1min"
