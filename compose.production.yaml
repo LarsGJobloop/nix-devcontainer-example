@@ -1,7 +1,7 @@
 name: gitops-introduction
 
 services:
-  ingress: # Or load balancer, or proxy, or whatever you want to call it
+  server:
     image: traefik:v3.5
     ports:
       - 80:80
@@ -12,15 +12,14 @@ services:
     command:
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
-      - "--api.insecure=true"
+      # "--api.insecure=true" # Uncomment this and the port above to enable Traefik's dashboard
   
-  todo-service:
-    build:
-      context: ./src
-      dockerfile: Dockerfile
+  example-service:
+    image: stefanprodan/podinfo
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - PODINFO_UI_COLOR=111827
+      - PODINFO_UI_MESSAGE=Welcome to the brand new app!
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.todo-service.rule=PathPrefix(`/`)"
-      - "traefik.http.services.todo-service.loadbalancer.server.port=8080"
+      - "traefik.http.routers.example-service.rule=PathPrefix(`/`)"
+      - "traefik.http.services.example-service.loadbalancer.server.port=9898"
