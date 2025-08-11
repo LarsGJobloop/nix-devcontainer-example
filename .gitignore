@@ -1,6 +1,10 @@
 # Ignore temporary nix files
 .direnv
 
+# Ignore temporary .NET files
+src/**/bin
+src/**/obj
+
 # Ignore the SSH keys we have them generate
 ssh-identity
 ssh-identity.pub

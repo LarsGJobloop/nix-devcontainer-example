@@ -37,6 +37,9 @@
             # See the Nix package registry for what's available
             # https://search.nixos.org/packages
 
+            # Application toolchain
+            dotnetCorePackages.sdk_9_0 # .NET 9.0 SDK
+
             # Infrastructure tools
             # !TODO: Figure out if initial setup time can be reduced, and that the devcontainer caches these across projects
             # Currently both IaC takes minutes to compile on clean setups
@@ -49,6 +52,11 @@
             sops # Secrets management
             age # Encryption tool
           ];
+
+          env = {
+            # The C# extension for VSCode requires this to be set to find the binaries
+            DOTNET_ROOT = builtins.toString pkgs.dotnetCorePackages.sdk_9_0;
+          };
         };
       });
     };
