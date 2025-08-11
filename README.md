@@ -100,6 +100,9 @@ GitOps is the practice of using Git and code as the source of all configuration.
 
 3. Go to the IP address and refresh until the app is updates. Can take up to the reconciliation interval defined in [./infrastructure/app.tf](/infrastructure/app.tf) pluss the restart time.
 
+> [!NOTE]
+> If you refreshed continuously you might have caught it mid refresh, and seen that the application was unavailable for a bit. You will have to do a bit more to achieve seemless rolling updates. But if that is a hard requirement you should start looking into more rigorous setups with more extensive observability, and self healing properties than what Docker Compose brings  
+
 **Cleanup**:
 ```sh
 sops exec-env secrets.yaml "terraform -chdir=infrastructure destroy"
