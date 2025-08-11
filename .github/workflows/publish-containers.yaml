@@ -1,6 +1,7 @@
 name: CD - Build & Push Services
 
 on:
+  workflow_dispatch: {} # Enable manual runs
   push:
     branches: [
       mono-repo
