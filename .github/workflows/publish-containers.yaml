@@ -1,0 +1,78 @@
+name: CD - Build & Push Services
+
+on:
+  push:
+    branches: [
+      mono-repo
+    ]
+    paths:
+      - 'src/**'
+
+env:
+  # GitHub is case-insensitive, and have inconsistent casing in their API.
+  # We need lowercase for the image prefix.
+  # You can either calculate the namespace from the repository name, or use the owner and name directly
+  # Repo link: https://github.com/LarsGJobloop/nix-devcontainer-example
+  # Hardcoded to reduce inline bash scripting.
+  REGISTRY: ghcr.io
+  IMAGE_PREFIX: ghcr.io/larsgjobloop/nix-devcontainer-example
+
+jobs:
+  # This job is used to detect the changed services so we only build and push those.
+  # Job reference: https://github.com/dorny/paths-filter
+  changes:
+    runs-on: ubuntu-latest
+    # Required permissions
+    permissions:
+      pull-requests: read
+    outputs:
+      # Expose matched filters as job 'services' output variable
+      services: ${{ steps.filter.outputs.changes }}
+    steps:
+    # For pull requests it's not necessary to checkout the code
+    - uses: dorny/paths-filter@v3
+      id: filter
+      with:
+        # See docs for how to add more services. Needs folder refactoring.
+        filters: |
+          todo-service: src/**
+
+  # This job is used to build and push the changes detected in the changes job.
+  # The output from the changes job is used to create a matrix of services to build and push.
+  # It's in essence the steps you would have to run in your own terminal.
+  build-and-push:
+    needs: changes
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service: ${{ fromJSON(needs.changes.outputs.services) }}
+      fail-fast: false # Continue on failure
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Setup Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build & Push multi-arch
+        id: build-push
+        # Mind the platforms here, they are to support both amd64 and arm64 development platforms.
+        run: |
+          IMAGE="${{ env.IMAGE_PREFIX }}/${{ matrix.service }}"
+          docker buildx build \
+            --platform linux/amd64,linux/arm64 \
+            --push \
+            -t $IMAGE:${{ github.sha }} \
+            -t $IMAGE:latest \
+            ./src/${{ matrix.service }}
